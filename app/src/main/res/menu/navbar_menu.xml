@@ -11,6 +11,11 @@
         android:title="Messagery" />
 
     <item
+        android:id="@+id/navigation_exercises"
+        android:icon="@drawable/baseline_sports_gymnastics_24"
+        android:title="Exercises" />
+
+    <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/baseline_account_circle_24"
         android:title="Account" />

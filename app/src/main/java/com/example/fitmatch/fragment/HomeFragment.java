@@ -1,9 +1,11 @@
-package com.example.fitmatch;
+package com.example.fitmatch.fragment;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fitmatch.R;
+import com.example.fitmatch.adapter.CardAdapter;
 import com.example.fitmatch.databinding.FragmentHomeBinding;
 import com.example.fitmatch.models.User;
 
@@ -33,14 +37,19 @@ import java.util.Map;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment, AppCompatActivity implements CardStackListener{
+public class HomeFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private View rootView;
 
+    private CardAdapter cardAdapter;
     private FragmentHomeBinding binding;
+    private List<User> users; // La liste des utilisateurs que vous voulez afficher
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -78,16 +87,18 @@ public class HomeFragment extends Fragment, AppCompatActivity implements CardSta
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        getExercisesFromAPI();
-        getRandomQuotesFromAPI();
+        users = new ArrayList<>();
 
-        List<User> cardList = new ArrayList<>();
-        cardList.add(new User(R.drawable.card_image_1, "Card 1"));
-        cardList.add(new User(R.drawable.card_image_2, "Card 2"));
-        cardList.add(new User(R.drawable.card_image_3, "Card 3"));
+        //getRandomQuotesFromAPI();
+
+        users.add(new User("Hamid",19, "https://i.pinimg.com/736x/b0/a0/ea/b0a0ea30556521996bb798bf7866f38f.jpg" ));
+        users.add(new User("Joshua",20, "https://ik.imagekit.io/yynn3ntzglc/cms/212_contenu1_104ac041a9_FVEhuH-TJHT.jpg" ));
 
 
     }
+
+
+
 
     private void getRandomQuotesFromAPI() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -144,76 +155,28 @@ public class HomeFragment extends Fragment, AppCompatActivity implements CardSta
         queue.add(jsonArrayRequest);
 
     }
-
-    private void getExercisesFromAPI() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://exerciseapi3.p.rapidapi.com/search/?name=Barbell%20Bench%20Press";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url,null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray  response)  {
-                        // Display the first 500 characters of the response string.
-                        binding.textView.setText("Response is: ");
-
-
-                        System.out.println("HELlo");
-                        System.out.println(response);
-
-                        for (int i = 0; i < response.length(); i++) {
-                            // creating a new json object and
-                            // getting each object from our json array.
-                            try {
-                                // we are getting each json object.
-                                JSONObject responseObj = response.getJSONObject(i);
-
-                                // now we get our response from API in json object format.
-                                // in below line we are extracting a string with
-                                // its key value from our json object.
-                                // similarly we are extracting all the strings from our json object.
-                                String force = responseObj.getString("Force");
-                                String name = responseObj.getString("Name");
-                                JSONArray primaryMuscles = responseObj.getJSONArray("Primary Muscles");
-                                System.out.println(force);
-                                System.out.println(name);
-                                System.out.println(primaryMuscles);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                binding.textView.setText("That didn't work!");
-                System.out.println("That didn't work!");
-                System.out.println(error.toString());
-            }
-
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError{
-                HashMap header  = new HashMap();
-                header.put("X-RapidAPI-Key", "6a56f693demsh100ded91c4d48dap1d2819jsn279ce0ccaec0");
-                header.put("X-RapidAPI-Host", "exerciseapi3.p.rapidapi.com");
-                return header;
-            }
-        };
-
-        // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequest);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, viewGroup, false);
+        return view;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //recycler
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // define an adapter
+        cardAdapter = new CardAdapter(getContext(), users);
+
+
+
+        cardAdapter.setNewCards(users);
+        recyclerView.setAdapter(cardAdapter);
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
 }

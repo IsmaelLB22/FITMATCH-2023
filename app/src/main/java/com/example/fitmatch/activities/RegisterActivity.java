@@ -58,6 +58,20 @@ public class RegisterActivity extends AppCompatActivity {
             user.put(Constants.KEY_USERNAME, binding.inputUsername.getText().toString());
             user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
             user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
+            user.put(Constants.KEY_AGE, binding.age.getText().toString());
+            if (binding.female.isChecked()){
+                user.put(Constants.KEY_GENDER, "female");
+            } else {
+                user.put(Constants.KEY_GENDER, "male");
+
+            }
+            user.put(Constants.KEY_HEIGHT, binding.height.getText().toString());
+            user.put(Constants.KEY_WEIGHT, binding.weight.getText().toString());
+            if (binding.loseWeight.isChecked()){
+                user.put(Constants.KEY_LOSEWEIGHT, true);
+            } else {
+                user.put(Constants.KEY_LOSEWEIGHT, false);
+            }
 
             // Add a new document with a generated ID
             db.collection("users")
@@ -65,20 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            mAuth.createUserWithEmailAndPassword(binding.inputEmail.getText().toString(), binding.inputPassword.getText().toString())
-                                    .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(RegisterActivity.this, "Register Successful!", Toast.LENGTH_SHORT).show();
-                                                loading(false);
+                            Toast.makeText(RegisterActivity.this, "Register Successful!", Toast.LENGTH_SHORT).show();
+                            loading(false);
 
-                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                startActivity(intent);
-
-                                            }
-                                        }
-                                    });
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

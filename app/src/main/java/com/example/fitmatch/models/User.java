@@ -1,12 +1,29 @@
 package com.example.fitmatch.models;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
     private String name, email;
     private int age;
+    private String photoId;
     private double weight, height;
     private boolean loseWeight;
+
+
+    public User(int i, String alice, String s, String perdre_du_poids) {
+    }
+
+    public User(String name, int age, String photoId) {
+        this.name = name;
+        this.age = age;
+        this.photoId = photoId;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
 
     public String getName() {
         return name;

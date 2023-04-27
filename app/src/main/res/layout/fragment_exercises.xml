@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.ExercisesFragment"
     android:background="@color/light_secondary">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,42 +12,24 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HOME"
+        android:text="Exercises"
         android:textColor="#37474F" />
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="50dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         android:overScrollMode="never"
         android:visibility="visible"
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:spanCount="1"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonMatch"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
 
-        android:layout_gravity="bottom|end"
-        android:foregroundGravity="right"
-
-
-        android:text="Match" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonNext"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-
-        android:layout_gravity="bottom|start"
-        android:foregroundGravity="right"
-
-
-        android:text="Next" />
 
 </FrameLayout>

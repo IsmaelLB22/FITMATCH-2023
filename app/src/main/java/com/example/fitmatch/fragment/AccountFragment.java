@@ -1,17 +1,24 @@
-package com.example.fitmatch;
+package com.example.fitmatch.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.fitmatch.R;
 import com.example.fitmatch.activities.MainActivity;
+import com.example.fitmatch.adapter.CardAdapter;
 import com.example.fitmatch.databinding.FragmentAccountBinding;
+import com.example.fitmatch.utilities.Constants;
+import com.example.fitmatch.utilities.PreferenceManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +33,7 @@ public class AccountFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private FragmentAccountBinding binding;
+    private PreferenceManager preferenceManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,22 +65,46 @@ public class AccountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentAccountBinding.inflate(getLayoutInflater());
+        preferenceManager = new PreferenceManager(getContext());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        binding.name.append("HEYY");
-        System.out.println(binding.name.getText());
-        binding.name.append("azazedazdazd");
+
     }
-
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_account, viewGroup, false);
+        return view;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //recycler
+        TextView mail = view.findViewById(R.id.mail);
+        TextView name = view.findViewById(R.id.name);
+        TextView age = view.findViewById(R.id.age);
+        TextView gender = view.findViewById(R.id.gender);
+        TextView height = view.findViewById(R.id.height);
+        TextView weight = view.findViewById(R.id.weight);
+        Button disconnect = view.findViewById(R.id.disconnect_button);
+        mail.append(preferenceManager.getString(Constants.KEY_EMAIL));
+        name.append(preferenceManager.getString(Constants.KEY_USERNAME));
+        age.append(preferenceManager.getString(Constants.KEY_AGE));
+        gender.append(preferenceManager.getString(Constants.KEY_GENDER));
+        height.append(preferenceManager.getString(Constants.KEY_HEIGHT) + " cm");
+        weight.append(preferenceManager.getString(Constants.KEY_WEIGHT) + " Kg");
+
+        disconnect.setOnClickListener(e-> {
+            preferenceManager.clear();
+            startActivity(new Intent(getContext(), MainActivity.class));
+        });
+
+    }
+
 }

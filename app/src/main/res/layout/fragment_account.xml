@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/secondary"
 
-    tools:context=".AccountFragment">
+    tools:context=".fragment.AccountFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,6 +60,8 @@
             android:text="Name : " />
 
         <TextView
+            android:id="@+id/age"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
@@ -69,6 +71,8 @@
 
 
         <TextView
+            android:id="@+id/gender"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
@@ -87,6 +91,8 @@
             android:text="Height (cm) : " />
 
         <TextView
+            android:id="@+id/weight"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
@@ -105,7 +111,7 @@
             android:animateLayoutChanges="true">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/register_button"
+                android:id="@+id/disconnect_button"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="80dp"

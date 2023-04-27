@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="0dp"
             android:text="Welcome to FitMatch"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -76,10 +76,90 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/inputPassword" />
 
+        <RadioGroup
+            android:id="@+id/genderRadioBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton2"
+            android:gravity="center"
+            android:hint="Age"
+            android:inputType="number"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/female" />
+
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton2"
+            android:gravity="center"
+            android:hint="Height"
+            android:inputType="number"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/inputPassword" />
+
+        <EditText
+            android:id="@+id/weight"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton2"
+            android:gravity="center"
+            android:hint="Weight"
+            android:inputType="number"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/inputPassword" />
+
+
+        <RadioGroup
+            android:id="@+id/weightRadioBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+        <RadioButton
+            android:id="@+id/loseWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lose Weight" />
+
+        <RadioButton
+            android:id="@+id/gainWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gain Weight" />
+        </RadioGroup>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:animateLayoutChanges="true">
 
             <androidx.appcompat.widget.AppCompatButton
