@@ -66,8 +66,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.myViewHolder> 
             binding.content.setText(user.getName() + " " + user.getAge());
 
             Glide.with(context)
-                    .load(user.getPhotoId())
+                    .load(user.getImage())
                     .into(binding.image);
+
+
         }
     }
 }

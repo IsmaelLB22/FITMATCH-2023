@@ -1,14 +1,22 @@
 package com.example.fitmatch.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -18,7 +26,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fitmatch.R;
-import com.example.fitmatch.adapter.CardAdapter;
 import com.example.fitmatch.adapter.ExercisesAdapter;
 import com.example.fitmatch.databinding.FragmentExercisesBinding;
 import com.example.fitmatch.models.Exercises;
@@ -43,7 +50,8 @@ public class ExercisesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private  ArrayList<Exercises> exercisesList;
+    private ArrayList<Exercises> exercisesList;
+    private ArrayList<String> musclesList;
     private ExercisesAdapter exercisesAdapter;
 
     private FragmentExercisesBinding binding;
@@ -84,60 +92,105 @@ public class ExercisesFragment extends Fragment {
         }
 
         exercisesList = new ArrayList<>();
-        getExercisesFromAPI();
-
-        exercisesAdapter = new ExercisesAdapter(exercisesList);
+        musclesList = new ArrayList<>();
+        //getExercisesFromAPI();
+        getMusclesFromAPI();
+        exercisesAdapter = new ExercisesAdapter(getContext(), exercisesList);
         binding.recyclerView.setAdapter(exercisesAdapter);
 
 
     }
 
-    private void getExercisesFromAPI() {
+    private void getMusclesFromAPI() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://exerciseapi3.p.rapidapi.com/search/?primaryMuscle=pectoralis%20major";
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url,null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray  response)  {
-                        // Display the first 500 characters of the response string.
-
-                        System.out.println(response);
-
-                        for (int i = 0; i < response.length(); i++) {
-                            // creating a new json object and
-                            // getting each object from our json array.
-                            try {
-                                // we are getting each json object.
-                                JSONObject responseObj = response.getJSONObject(i);
-
-                                // now we get our response from API in json object format.
-                                // in below line we are extracting a string with
-                                // its key value from our json object.
-                                // similarly we are extracting all the strings from our json object.
+        String url = "https://exerciseapi3.p.rapidapi.com/search/muscles/";
 
 
-                                Exercises exercise = new Exercises(responseObj.getString("Force"), responseObj.getString("Name"),
-                                        responseObj.getJSONArray("Primary Muscles"),  responseObj.getJSONArray("SecondaryMuscles"), responseObj.getString("Type"), responseObj.getJSONArray("Workout Type"), responseObj.getString("Youtube link"));
-                                exercisesList.add(exercise);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                System.out.println(response);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        // we are getting each json object.
+                        String muscle = String.valueOf(response.getString(i));
+                        System.out.println(muscle);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } }
-                        exercisesAdapter.setNewExercises(exercisesList);
+                        musclesList.add(muscle);
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("That didn't work!");
                 System.out.println(error.toString());
             }
 
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap header  = new HashMap();
+                HashMap header = new HashMap();
+                header.put("X-RapidAPI-Key", "6a56f693demsh100ded91c4d48dap1d2819jsn279ce0ccaec0");
+                header.put("X-RapidAPI-Host", "exerciseapi3.p.rapidapi.com");
+                return header;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+
+    }
+
+    private void getExercisesFromAPI(String muscle) {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = "https://exerciseapi3.p.rapidapi.com/search/?primaryMuscle=" + muscle;
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                // Display the first 500 characters of the response string.
+
+                System.out.println(response);
+
+                for (int i = 0; i < response.length(); i++) {
+                    // creating a new json object and
+                    // getting each object from our json array.
+                    try {
+                        // we are getting each json object.
+                        JSONObject responseObj = response.getJSONObject(i);
+
+                        // now we get our response from API in json object format.
+                        // in below line we are extracting a string with
+                        // its key value from our json object.
+                        // similarly we are extracting all the strings from our json object.
+
+
+                        Exercises exercise = new Exercises(responseObj.getString("Force"), responseObj.getString("Name"), responseObj.getJSONArray("Primary Muscles"), responseObj.getJSONArray("SecondaryMuscles"), responseObj.getString("Type"), responseObj.getJSONArray("Workout Type"), responseObj.getString("Youtube link"));
+                        exercisesList.add(exercise);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                exercisesAdapter.setNewExercises(exercisesList);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("That didn't work!");
+                System.out.println(error.toString());
+            }
+
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap header = new HashMap();
                 header.put("X-RapidAPI-Key", "6a56f693demsh100ded91c4d48dap1d2819jsn279ce0ccaec0");
                 header.put("X-RapidAPI-Host", "exerciseapi3.p.rapidapi.com");
                 return header;
@@ -166,11 +219,42 @@ public class ExercisesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // define an adapter
-        exercisesAdapter = new ExercisesAdapter(exercisesList);
+        exercisesAdapter = new ExercisesAdapter(getContext(), exercisesList);
         exercisesAdapter.setNewExercises(exercisesList);
 
 
         recyclerView.setAdapter(exercisesAdapter);
+        ViewFlipper viewFlipper = view.findViewById(R.id.view_flipper_muscu);
+        GridLayout gridLayout = view.findViewById(R.id.gridLayout);
+        TextView textView = view.findViewById(R.id.textTitleMuscle);
+        int cpt = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 11; j++) {
+                TextView button = new TextView(getContext());
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.columnSpec = GridLayout.spec(j, 1f);
+                params.rowSpec = GridLayout.spec(i, 1f);
+                params.setMargins(8, 8, 8, 8); // Ajouter des marges
+                button.setLayoutParams(params);
+                Drawable myDrawable = getResources().getDrawable(R.drawable.custombutton);
+                button.setBackground(myDrawable);
+                button.setText(String.valueOf(cpt + 1));
+                button.setId(cpt);
+                button.setTextColor(Color.WHITE);
+                button.setGravity(Gravity.CENTER);
+                cpt++;
+                gridLayout.addView(button);
+                button.setOnClickListener(e -> {
+                    exercisesList.clear();
+                    System.out.println("heeeeeeeelooooooooooooo");
+                    viewFlipper.showNext();
+                    textView.setText(musclesList.get(button.getId()));
+                    getExercisesFromAPI(musclesList.get(button.getId()));
+                });
+            }
+        }
+
 
     }
+
 }

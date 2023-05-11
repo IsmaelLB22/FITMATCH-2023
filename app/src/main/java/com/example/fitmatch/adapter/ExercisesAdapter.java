@@ -1,6 +1,10 @@
 package com.example.fitmatch.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,8 +19,9 @@ import java.util.List;
 public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>{
 
     private List<Exercises> exercisesList;
-
-    public ExercisesAdapter(ArrayList<Exercises> exercisesList) {
+    private static Context context;
+    public ExercisesAdapter(Context context, ArrayList<Exercises> exercisesList) {
+        this.context = context;
         this.exercisesList = exercisesList;
     }
 
@@ -55,7 +60,20 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
         }
 
         public void setExerciseData(Exercises exercises) {
-            binding.title.setText(exercises.getName());
+            binding.exerciseName.setText(exercises.getName());
+            binding.exerciseMuscles.setText("Primary muscles worked: " + exercises.getPrimaryMuscles());
+            binding.exerciseSecondaryMuscles.setText("Secondary muscles worked: " + exercises.getSecondaryMuscles());
+            binding.exerciseWorkoutType.setText("Workout type: " + exercises.getWorkoutType());
+            binding.watchVideoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String videoId = exercises.getYoutubeLink(); // Replace VIDEO_ID with the actual video ID
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoId));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("VIDEO_ID", videoId);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

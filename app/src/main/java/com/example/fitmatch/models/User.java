@@ -6,24 +6,23 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String name, email;
-    private int age;
-    private String photoId;
+    private String age;
     private double weight, height;
     private boolean loseWeight;
+    private String id, image, gender;
 
+    public User(){
 
+    }
     public User(int i, String alice, String s, String perdre_du_poids) {
     }
 
-    public User(String name, int age, String photoId) {
+    public User(String name, String age, String image) {
         this.name = name;
         this.age = age;
-        this.photoId = photoId;
+        this.image = image;
     }
 
-    public String getPhotoId() {
-        return photoId;
-    }
 
     public String getName() {
         return name;
@@ -41,11 +40,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -69,7 +68,32 @@ public class User implements Serializable {
         return loseWeight;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
     public void setLoseWeight(boolean loseWeight) {
         this.loseWeight = loseWeight;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

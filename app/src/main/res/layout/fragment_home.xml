@@ -5,49 +5,49 @@
     android:id="@+id/card_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_secondary">
+    android:background="@color/light_secondary"
+    android:padding="20dp"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView"
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageBuddy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="HOME"
-        android:textColor="#37474F" />
+        android:scaleType="fitXY"
+        android:background="@color/white"
+        />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:nestedScrollingEnabled="false"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        android:visibility="visible"
-
-        />
+        android:background="@color/primary"
+        android:padding="30dp"
+        android:layout_gravity="bottom|end"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="22sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonMatch"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-
+        android:layout_height="100dp"
+        android:background="@drawable/handshake"
+        android:gravity="center|bottom"
         android:layout_gravity="bottom|end"
         android:foregroundGravity="right"
-
-
         android:text="Match" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonNext"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-
+        android:layout_height="100dp"
+        android:background="@drawable/round_close_24"
+        android:gravity="center|bottom"
         android:layout_gravity="bottom|start"
         android:foregroundGravity="right"
-
-
         android:text="Next" />
 
 </FrameLayout>

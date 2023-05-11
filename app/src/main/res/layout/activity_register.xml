@@ -1,191 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
-    android:clipToPadding="false"
-    android:overScrollMode="never"
-    android:scrollbars="none">
+    android:background="@drawable/background_login">
 
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:text="Welcome to FitMatch"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        />
 
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="Welcome to FitMatch"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/inputUsername"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="@string/name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/inputEmail"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="@string/email"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/name" />
+            >
 
-        <EditText
-            android:id="@+id/inputPassword"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="100dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="@string/password"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/inputEmail" />
-
-        <EditText
-            android:id="@+id/inputCPassword"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="@string/confirm_password"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/inputPassword" />
-
-        <RadioGroup
-            android:id="@+id/genderRadioBox"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
-            <RadioButton
-                android:id="@+id/male"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Male" />
-
-            <RadioButton
-                android:id="@+id/female"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Female" />
-
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="Age"
-            android:inputType="number"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/female" />
-
-
-        <EditText
-            android:id="@+id/height"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="Height"
-            android:inputType="number"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/inputPassword" />
-
-        <EditText
-            android:id="@+id/weight"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custombutton2"
-            android:gravity="center"
-            android:hint="Weight"
-            android:inputType="number"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/inputPassword" />
-
-
-        <RadioGroup
-            android:id="@+id/weightRadioBox"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
-        <RadioButton
-            android:id="@+id/loseWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lose Weight" />
-
-        <RadioButton
-            android:id="@+id/gainWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gain Weight" />
-        </RadioGroup>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:animateLayoutChanges="true">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/register_button"
+            <ImageView
+                android:id="@+id/profilePicture"
                 android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/baseline_person_24"
+                />
+            <EditText
+
+                android:id="@+id/inputUsername"
+                android:layout_width="250dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
-                android:background="@drawable/custombutton"
-                android:hint="@string/register"
-                android:textAllCaps="false"
-                android:textColorHint="@color/white"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/name"
+                android:singleLine="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/inputCPassword" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <EditText
+                android:id="@+id/inputEmail"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/email"
+                android:singleLine="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/name" />
+
+            <EditText
+                android:id="@+id/inputPassword"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/inputEmail" />
+
+            <EditText
+                android:id="@+id/inputCPassword"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/inputPassword" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <RadioGroup
+                android:id="@+id/genderRadioBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="invisible" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Gender :"
+                    android:textSize="25sp" />
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/birth_date"
+                android:inputType="date"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/female" />
 
 
-        </FrameLayout>
+            <EditText
+                android:id="@+id/height"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/height_cm"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/age" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="@string/weight_kg"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/height" />
 
-</ScrollView>
+
+            <RadioGroup
+                android:id="@+id/weightRadioBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Goal :"
+                    android:textSize="25sp" />
+
+                <RadioButton
+                    android:id="@+id/loseWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lose Weight" />
+
+                <RadioButton
+                    android:id="@+id/gainWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gain Weight" />
+            </RadioGroup>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:animateLayoutChanges="true"
+                android:layout_gravity="center"
+                >
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/register_button"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:background="@drawable/custombutton"
+                    android:hint="@string/register"
+                    android:textAllCaps="false"
+                    android:textColorHint="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </ViewFlipper>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/next_button"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custombutton"
+        android:hint="Next"
+        android:textAllCaps="false"
+        android:textColorHint="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_button"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custombutton"
+        android:hint="Back"
+        android:textAllCaps="false"
+        android:textColorHint="@color/white"
+        android:visibility="gone" />
+
+</RelativeLayout>
