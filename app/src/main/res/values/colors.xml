@@ -8,10 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#455A64</color>
-    <color name="secondary">#607D8B</color>
-    <color name="dark_primary">#263238</color>
-    <color name="blue_gray">#ECEFF1</color>
-    <color name="light_secondary">#B0BEC5</color>
-    <color name="backgroundColor">#3fff</color>
+        <!-- Couleurs -->
+    <color name="primary">#0684d4</color>
+    <color name="primary_dark">#043E63</color>
+        <color name="secondary">#516f99</color>
+        <color name="secondary2">#7488a4</color>
+        <color name="textPrimary">#333333</color>
+        <color name="textSecondary">#666666</color>
+        <color name="textDisabled">#cccccc</color>
+        <color name="background">#f5f5f5</color>
+    <color name="inputColor">#FFFFFF</color>
+
 </resources>

@@ -16,12 +16,13 @@ import com.example.fitmatch.models.Exercises;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>{
+public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder> {
 
     private List<Exercises> exercisesList;
     private static Context context;
+
     public ExercisesAdapter(Context context, ArrayList<Exercises> exercisesList) {
-        this.context = context;
+        ExercisesAdapter.context = context;
         this.exercisesList = exercisesList;
     }
 
@@ -54,6 +55,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Exer
 
     public class ExerciseViewHolder extends RecyclerView.ViewHolder {
         ItemContainerExerciseBinding binding;
+
         public ExerciseViewHolder(ItemContainerExerciseBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

@@ -3,297 +3,257 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondary"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_app"
     tools:context=".fragment.AccountFragment">
 
-    <LinearLayout
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="16dp"
+       >
 
         <TextView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/custombutton"
-            android:gravity="center"
-            android:text="Personal Data"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
-
-        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="50dp"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/custombutton">
+            android:layout_height="wrap_content"
+            android:text="Personal Data"
+            android:textColor="@color/textPrimary"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
-                    android:text="Mail : "
-                    android:textSize="25sp"
 
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/baseline_person_24"
+                    android:scaleType="centerCrop"
+                    app:riv_oval="true"
                     />
 
-                <EditText
-
-                    android:id="@+id/inputEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/custombutton2"
-                    android:gravity="center"
-                    android:hint="@string/email"
-                    android:padding="5dp"
-                    android:singleLine="true" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="70dp"
-                    android:text="Name : "
-                    android:textSize="25sp" />
-
+                    android:text="Name :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
 
                 <EditText
-
-                    android:id="@+id/inputUsername"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/inputName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="70dp"
+                    android:hint="Name"
+                    android:inputType="text"
                     android:background="@drawable/custombutton2"
-                    android:gravity="center"
-                    android:hint="@string/name"
-                    android:padding="5dp"
-                    android:singleLine="true" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:layout_marginTop="8dp" />
 
                 <TextView
-                    android:id="@+id/age"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/mail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="110dp"
-                    android:text="Age : "
-                    android:textSize="25sp" />
-
+                    android:text="Mail :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
 
                 <EditText
-
-                    android:id="@+id/inputUserBirthDate"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/inputEmail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="110dp"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
                     android:background="@drawable/custombutton2"
-                    android:gravity="center"
-                    android:hint="@string/birth_date"
-                    android:padding="5dp"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/birthDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Birth Date :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
+
+                <EditText
+                    android:id="@+id/inputBirthDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Birth Date"
                     android:inputType="date"
-
-                    android:singleLine="true" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                    android:background="@drawable/custombutton2"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:layout_marginTop="8dp" />
 
                 <TextView
                     android:id="@+id/gender"
-
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="150dp"
-                    android:text="Gender : "
-                    android:textSize="25sp" />
+                    android:text="Gender :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
 
                 <RadioGroup
-                    android:id="@+id/genderRadioBox"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/gender_radio_group"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:checkedButton="@id/male"
-                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Male" />
+                        android:text="Male"
+                        android:textColor="@color/white" />
 
                     <RadioButton
                         android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Female" />
+                        android:text="Female"
+                        android:textColor="@color/white" />
 
                 </RadioGroup>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/height"
-
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="190dp"
-                    android:text="Height (cm) : "
-                    android:textSize="25sp" />
+                    android:text="Height (cm) :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
 
                 <EditText
-
                     android:id="@+id/inputUserHeight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="190dp"
-                    android:background="@drawable/custombutton2"
-                    android:gravity="center"
                     android:hint="Height"
                     android:inputType="number"
-                    android:padding="5dp"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                    android:background="@drawable/custombutton2"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:layout_marginTop="8dp" />
 
                 <TextView
                     android:id="@+id/weight"
-
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="230dp"
-                    android:text="Weight (kg) : "
-                    android:textSize="25sp" />
+                    android:text="Weight (kg) :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
 
                 <EditText
-
                     android:id="@+id/inputUserWeight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="230dp"
-                    android:background="@drawable/custombutton2"
-                    android:gravity="center"
                     android:hint="Weight"
                     android:inputType="number"
-                    android:padding="5dp"
-                    android:singleLine="true"/>
+                    android:background="@drawable/custombutton2"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:layout_marginTop="8dp" />
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Goal :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
+
+                <RadioGroup
+                    android:id="@+id/weightRadioBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/loseWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lose Weight" />
+
+                    <RadioButton
+                        android:id="@+id/gainWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gain Weight" />
+                </RadioGroup>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description :"
+                    android:textSize="25sp"
+                    android:layout_marginTop="16dp" />
+
+                <EditText
+                    android:id="@+id/inputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:maxLines="4"
+                    android:background="@drawable/custombutton2"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp" />
+
 
             </LinearLayout>
 
+        </ScrollView>
 
-        </FrameLayout>
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:animateLayoutChanges="true">
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/update_button"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:background="@drawable/custombutton"
-                android:hint="Update data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Update data"
                 android:textAllCaps="false"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/white"
+                android:background="@drawable/custombutton"
+                android:layout_margin="8dp"/>
 
-            <ProgressBar
-                android:id="@+id/progressBarUpdate"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
-
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:animateLayoutChanges="true">
-
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/disconnect_button"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:background="@drawable/custombutton"
-                android:hint="Disconnect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Disconnect"
                 android:textAllCaps="false"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/white"
+                android:background="@drawable/custombutton"
+                android:layout_margin="8dp"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
-
-
-        </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
-
 </FrameLayout>

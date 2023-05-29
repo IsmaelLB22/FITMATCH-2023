@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login">
+    android:background="@drawable/background_app">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -15,8 +16,7 @@
         android:gravity="center"
         android:text="Welcome to FitMatch"
         android:textSize="35sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <ViewFlipper
         android:id="@+id/viewFlipper"
@@ -30,25 +30,26 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_marginTop="50dp"
 
             >
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/profilePicture"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:background="@drawable/baseline_person_24"
-                />
+                android:background="@drawable/baseline_person_24" />
+
             <EditText
 
                 android:id="@+id/inputUsername"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/custombutton2"
                 android:gravity="center"
                 android:hint="@string/name"
                 android:singleLine="true"
+                android:textColorHint="#FFFFFF"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,40 +63,62 @@
                 android:gravity="center"
                 android:hint="@string/email"
                 android:singleLine="true"
+                android:textColorHint="#FFFFFF"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/name" />
 
-            <EditText
-                android:id="@+id/inputPassword"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="100dp"
-                android:background="@drawable/custombutton2"
-                android:gravity="center"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/inputEmail" />
+            <com.google.android.material.textfield.TextInputLayout
 
-            <EditText
-                android:id="@+id/inputCPassword"
                 android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/custombutton2"
-                android:gravity="center"
-                android:hint="@string/confirm_password"
-                android:inputType="textPassword"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/inputPassword" />
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="#070101"
+                app:boxStrokeWidth="0dp"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/primary_dark">
 
+                <EditText
+                    android:id="@+id/inputPassword"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/custombutton2"
+                    android:gravity="center"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/inputEmail" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="250dp"
+                android:layout_height="75dp"
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="#070101"
+                app:boxStrokeWidth="0dp"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/primary_dark">
+
+                <EditText
+                    android:id="@+id/inputCPassword"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/custombutton2"
+                    android:gravity="center"
+                    android:hint="@string/confirm_password"
+                    android:inputType="textPassword"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/inputPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -135,7 +158,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/age"
+                android:id="@+id/birthDate"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
@@ -160,7 +183,7 @@
                 android:inputType="number"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/age" />
+                app:layout_constraintTop_toTopOf="@id/birthDate" />
 
             <EditText
                 android:id="@+id/weight"
@@ -204,29 +227,100 @@
                     android:text="Gain Weight" />
             </RadioGroup>
 
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="Description"
+                android:maxLines="4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/weightRadioBox" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/street"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="Street"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <EditText
+                android:id="@+id/locality"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="Locality"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/street" />
+
+            <EditText
+                android:id="@+id/postalCode"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="Postal Code"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/locality" />
+
+            <EditText
+                android:id="@+id/country"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custombutton2"
+                android:gravity="center"
+                android:hint="Country"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/postalCode" />
+
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:animateLayoutChanges="true"
                 android:layout_gravity="center"
-                >
+                android:layout_marginTop="20dp"
+                android:animateLayoutChanges="true">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/register_button"
+                    android:id="@+id/get_position_button"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="100dp"
                     android:layout_marginRight="100dp"
                     android:background="@drawable/custombutton"
-                    android:hint="@string/register"
+                    android:hint="Get Position"
                     android:textAllCaps="false"
                     android:textColorHint="@color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintRight_toRightOf="parent" />
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/progressBarGetPosition"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -235,16 +329,47 @@
 
             </FrameLayout>
 
+
         </LinearLayout>
 
 
     </ViewFlipper>
 
+    <FrameLayout
+        android:id="@+id/register_layout"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/custombutton"
+            android:hint="@string/register"
+            android:textAllCaps="false"
+            android:textColorHint="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+
+    </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_button"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
@@ -256,8 +381,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_button"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
@@ -266,5 +391,17 @@
         android:textAllCaps="false"
         android:textColorHint="@color/white"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/pagination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="1/3"
+        android:textSize="@dimen/_20ssp" />
+
 
 </RelativeLayout>

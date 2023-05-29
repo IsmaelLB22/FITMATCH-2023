@@ -1,14 +1,11 @@
 package com.example.fitmatch.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +13,29 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
 import com.example.fitmatch.R;
 import com.example.fitmatch.activities.MainActivity;
-import com.example.fitmatch.activities.RegisterActivity;
-import com.example.fitmatch.adapter.CardAdapter;
-import com.example.fitmatch.databinding.FragmentAccountBinding;
-import com.example.fitmatch.models.User;
 import com.example.fitmatch.utilities.Constants;
 import com.example.fitmatch.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,10 +50,13 @@ public class AccountFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private PreferenceManager preferenceManager;
+    private Uri imagePath = null;
 
-    private EditText mail, name, age, height, weight;
-    private RadioButton genderMale, genderFemale;
+    private EditText mail, name, age, height, weight, description;
+    private RadioButton genderMale, genderFemale, gain, lose;
     private Button updateData, disconnect;
+
+    private RoundedImageView image;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -103,13 +104,9 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         setElements(view);
         loadUserDetails();
         setListeners();
-
-
     }
 
     private void setListeners() {
@@ -117,48 +114,66 @@ public class AccountFragment extends Fragment {
             updateUserData();
         });
 
+        //Deconnexion
         disconnect.setOnClickListener(e -> {
             preferenceManager.clear();
             startActivity(new Intent(getContext(), MainActivity.class));
         });
 
+        //permet d'ouvrir un calendrier pour l'insertion de sa date de naissance
         age.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are getting
-                // the instance of our calendar.
                 final Calendar c = Calendar.getInstance();
-
-                // on below line we are getting
-                // our day, month and year.
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-
-                // on below line we are creating a variable for date picker dialog.
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        // on below line we are passing context.
                         getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                // on below line we are setting date to our edit text.
                                 age.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                             }
                         },
-                        // on below line we are passing year,
-                        // month and day for selected date in our date picker.
                         year, month, day);
-                // at last we are calling show to
-                // display our date picker dialog.
                 datePickerDialog.show();
+            }
+        });
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoIntent = new Intent(Intent.ACTION_PICK);
+                photoIntent.setType("image/*");
+                startActivityForResult(photoIntent, 1);
             }
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            imagePath = data.getData();
+            getImageInImageView(imagePath);
+        }
+    }
+
+    //chargement de la photo dans l'image view
+    private void getImageInImageView(Object imageToLoad) {
+        Glide.with(getContext())
+                .load(imageToLoad)
+                .into(image);
+    }
+
+    //On charge les donnees dans les elements xml
     private void loadUserDetails() {
+
+        getImageInImageView(preferenceManager.getString(Constants.KEY_IMAGE));
+
         mail.setText(preferenceManager.getString(Constants.KEY_EMAIL));
         name.setText(preferenceManager.getString(Constants.KEY_USERNAME));
         age.setText(preferenceManager.getString(Constants.KEY_AGE));
@@ -167,23 +182,32 @@ public class AccountFragment extends Fragment {
         else genderFemale.setChecked(true);
         height.setText(preferenceManager.getString(Constants.KEY_HEIGHT));
         weight.setText(preferenceManager.getString(Constants.KEY_WEIGHT));
+        if (preferenceManager.getBoolean(Constants.KEY_LOSEWEIGHT))
+            lose.setChecked(true);
+        else gain.setChecked(true);
+        description.setText(preferenceManager.getString(Constants.KEY_DESCRIPTION));
     }
 
+    //On init les elements xml
     private void setElements(View view) {
+        image = view.findViewById(R.id.profile_image);
         mail = view.findViewById(R.id.inputEmail);
-        name = view.findViewById(R.id.inputUsername);
-        age = view.findViewById(R.id.inputUserBirthDate);
+        name = view.findViewById(R.id.inputName);
+        age = view.findViewById(R.id.inputBirthDate);
         genderMale = view.findViewById(R.id.male);
         genderFemale = view.findViewById(R.id.female);
         height = view.findViewById(R.id.inputUserHeight);
         weight = view.findViewById(R.id.inputUserWeight);
+        description = view.findViewById(R.id.inputDescription);
+        gain = view.findViewById(R.id.gainWeight);
+        lose = view.findViewById(R.id.loseWeight);
         updateData = view.findViewById(R.id.update_button);
         disconnect = view.findViewById(R.id.disconnect_button);
     }
 
+    //Cette methode mets à jour les données user dans la bd et localement
     private void updateUserData() {
         HashMap<String, Object> user = new HashMap<>();
-
         user.put(Constants.KEY_USERNAME, name.getText().toString());
         user.put(Constants.KEY_EMAIL, mail.getText().toString());
         if (genderFemale.isChecked()) user.put(Constants.KEY_GENDER, "female");
@@ -191,8 +215,9 @@ public class AccountFragment extends Fragment {
         user.put(Constants.KEY_AGE, age.getText().toString());
         user.put(Constants.KEY_HEIGHT, height.getText().toString());
         user.put(Constants.KEY_WEIGHT, weight.getText().toString());
-
-
+        if (gain.isChecked()) user.put(Constants.KEY_LOSEWEIGHT, false);
+        else user.put(Constants.KEY_LOSEWEIGHT, true);
+        user.put(Constants.KEY_DESCRIPTION, description.getText().toString());
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .document(preferenceManager.getString(Constants.KEY_USER_ID))
@@ -201,12 +226,17 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void onSuccess(Void unused) {
                         System.out.println("User data updated successfully!");
+                        if (imagePath !=null){
+                            addImageToFireStorage();
+                        }
                         preferenceManager.putString(Constants.KEY_EMAIL, user.get(Constants.KEY_EMAIL).toString());
                         preferenceManager.putString(Constants.KEY_USERNAME, user.get(Constants.KEY_USERNAME).toString());
                         preferenceManager.putString(Constants.KEY_GENDER, user.get(Constants.KEY_GENDER).toString());
                         preferenceManager.putString(Constants.KEY_AGE, user.get(Constants.KEY_AGE).toString());
                         preferenceManager.putString(Constants.KEY_WEIGHT, user.get(Constants.KEY_WEIGHT).toString());
                         preferenceManager.putString(Constants.KEY_HEIGHT, user.get(Constants.KEY_HEIGHT).toString());
+                        preferenceManager.putBoolean(Constants.KEY_LOSEWEIGHT, (Boolean) user.get(Constants.KEY_LOSEWEIGHT));
+                        preferenceManager.putString(Constants.KEY_DESCRIPTION, user.get(Constants.KEY_DESCRIPTION).toString());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -215,5 +245,48 @@ public class AccountFragment extends Fragment {
                         System.out.println("Error updating user data: " + e.getMessage());
                     }
                 });
+    }
+
+    //Ajout de la photo dans la bd
+    private void addImageToFireStorage() {
+        FirebaseStorage.getInstance().getReference("images/" + UUID.randomUUID().toString()).putFile(imagePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
+                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                updateProfilePicture(task.getResult().toString());
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //Màj de la photo
+    private void updateProfilePicture(String url) {
+        Map<String, Object> user = new HashMap<>();
+        user.put(Constants.KEY_IMAGE, url);
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_USERS)
+                .document(preferenceManager.getString(Constants.KEY_USER_ID))
+                .update(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        preferenceManager.putString(Constants.KEY_IMAGE, user.get(Constants.KEY_IMAGE).toString());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Error updating user data: " + e.getMessage());
+                    }
+                });
+
     }
 }

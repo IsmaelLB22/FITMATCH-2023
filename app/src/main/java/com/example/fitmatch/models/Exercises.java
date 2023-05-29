@@ -3,7 +3,6 @@ package com.example.fitmatch.models;
 import org.json.JSONArray;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Exercises implements Serializable {
     public String getForce() {
@@ -76,7 +75,6 @@ public class Exercises implements Serializable {
     }
 
 
-
- //"Force":"push","Name":"Barbell Bench Press","Primary Muscles":["deltoid","pectoralis major"],"SecondaryMuscles":["triceps"],"Type":"compound","Workout Type":["strength"],"Youtube link":"https:\/\/www.youtube.com\/watch?v=rT7DgCr-3pg&t=29s&ab_channel=ScottHermanFitness"}]
+    //"Force":"push","Name":"Barbell Bench Press","Primary Muscles":["deltoid","pectoralis major"],"SecondaryMuscles":["triceps"],"Type":"compound","Workout Type":["strength"],"Youtube link":"https:\/\/www.youtube.com\/watch?v=rT7DgCr-3pg&t=29s&ab_channel=ScottHermanFitness"}]
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_secondary"
+    android:background="@drawable/background_app"
     tools:context=".fragment.ExercisesFragment">
 
 
@@ -33,14 +33,15 @@
             <ImageView
                 android:id="@+id/background"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:src="@drawable/muscle" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/muscle"
+                android:scaleType="fitXY" />
 
             <GridLayout
                 android:id="@+id/gridLayout"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:columnCount="11"
@@ -49,6 +50,7 @@
                 android:rowCount="2" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

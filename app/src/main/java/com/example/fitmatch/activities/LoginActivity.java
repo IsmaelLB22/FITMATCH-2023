@@ -6,48 +6,46 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitmatch.databinding.ActivityLoginBinding;
 import com.example.fitmatch.utilities.Constants;
 import com.example.fitmatch.utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-
     private PreferenceManager preferenceManager;
 
     private ActivityLoginBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setContentView(binding.getRoot());
-        mAuth = FirebaseAuth.getInstance();
         setListeners();
     }
 
+    //On init les listeners
     private void setListeners() {
-        binding.buttonLogin.setOnClickListener(e-> loginUser());
-        binding.textNewAccount.setOnClickListener(e-> openRegisterActivity());
+        binding.buttonLogin.setOnClickListener(e -> loginUser());
+        binding.textNewAccount.setOnClickListener(e -> openRegisterActivity());
     }
 
+    //On ouvre la page inscription
     private void openRegisterActivity() {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
     }
 
+    //on connecte l'utilisateur et on sauvegarde ses données localement
     private void loginUser() {
-        if (checkInputData()){
+        //on verifie si les entrees sont correctes
+        if (checkInputData()) {
+            //on lance la progressbar
             loading(true);
             FirebaseFirestore database = FirebaseFirestore.getInstance();
             database.collection(Constants.KEY_COLLECTION_USERS)
@@ -64,14 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                             preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
                             preferenceManager.putString(Constants.KEY_GENDER, documentSnapshot.getString(Constants.KEY_GENDER));
                             preferenceManager.putString(Constants.KEY_AGE, documentSnapshot.getString(Constants.KEY_AGE));
-                            preferenceManager.putString(Constants.KEY_WEIGHT,documentSnapshot.getString(Constants.KEY_WEIGHT));
+                            preferenceManager.putString(Constants.KEY_WEIGHT, documentSnapshot.getString(Constants.KEY_WEIGHT));
                             preferenceManager.putString(Constants.KEY_HEIGHT, documentSnapshot.getString(Constants.KEY_HEIGHT));
                             preferenceManager.putBoolean(Constants.KEY_LOSEWEIGHT, documentSnapshot.getBoolean(Constants.KEY_LOSEWEIGHT));
+                            preferenceManager.putString(Constants.KEY_DESCRIPTION, documentSnapshot.getString(Constants.KEY_DESCRIPTION));
 
-
-
+                            //On le redirige vers la mainpage
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
@@ -82,19 +79,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     private boolean checkInputData() {
-       if (binding.inputEmail.getText().toString().trim().isEmpty()){
+        //Obligation de remplir les champs
+        if (binding.inputEmail.getText().toString().trim().isEmpty()) {
             binding.inputEmail.setError("Email is required!");
             binding.inputEmail.requestFocus();
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()) {
             binding.inputEmail.setError("Enter valid email!");
             binding.inputEmail.requestFocus();
             return false;
-        } else if (binding.inputPassword.getText().toString().trim().isEmpty()){
+        } else if (binding.inputPassword.getText().toString().trim().isEmpty()) {
             binding.inputPassword.setError("Enter password!");
             binding.inputPassword.requestFocus();
             return false;
@@ -104,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loading(Boolean isLoading){
-        if (isLoading){
+    private void loading(Boolean isLoading) {
+        if (isLoading) {
             binding.buttonLogin.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
@@ -113,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
             binding.buttonLogin.setVisibility(View.VISIBLE);
         }
     }
-
 
 
 }

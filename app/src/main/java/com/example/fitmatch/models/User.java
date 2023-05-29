@@ -1,26 +1,39 @@
 package com.example.fitmatch.models;
 
-import android.net.Uri;
-
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class User implements Serializable {
     private String name, email;
-    private String age;
-    private double weight, height;
+    private String birthDate;
     private boolean loseWeight;
-    private String id, image, gender;
+    private String id, image, gender, weight, height;
+    private String description;
+    private double latitude, longitude;
 
-    public User(){
 
-    }
-    public User(int i, String alice, String s, String perdre_du_poids) {
-    }
-
-    public User(String name, String age, String image) {
+    public User(String name, String email, String birthdate, String weight, String height, boolean loseWeight, String image, String gender, String description, String latitude, String longitude) {
         this.name = name;
-        this.age = age;
+        this.email = email;
+        this.birthDate = birthdate;
+        this.weight = weight;
+        this.height = height;
+        this.loseWeight = loseWeight;
+        this.gender = gender;
         this.image = image;
+    }
+
+    public User(String name, String birthDate, String image) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.image = image;
+    }
+
+    public User() {
+
     }
 
 
@@ -40,27 +53,27 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getAge() {
-        return age;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setBirthDate(String age) {
+        this.birthDate = age;
     }
 
-    public double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public double getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -74,6 +87,13 @@ public class User implements Serializable {
 
     public String getImage() {
         return image;
+    }
+
+    public String getGoal() {
+        if (this.loseWeight)
+            return "Lose Weight";
+        else
+            return "Gain Weight";
     }
 
     public String getGender() {
@@ -93,7 +113,61 @@ public class User implements Serializable {
 
     }
 
+    public String getAge() {
+        int age = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date = dateFormat.parse(this.birthDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            // Obtention de la date actuelle
+            Calendar currentDate = Calendar.getInstance();
+
+            // Calcul de la différence entre les années
+            age = currentDate.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
+
+            // Vérification si l'anniversaire n'est pas encore passé cette année
+            if (currentDate.get(Calendar.MONTH) < calendar.get(Calendar.MONTH) ||
+                    (currentDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                            currentDate.get(Calendar.DAY_OF_MONTH) < calendar.get(Calendar.DAY_OF_MONTH))) {
+                age--; // Décrémentation de l'âge si l'anniversaire n'est pas encore passé
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return String.valueOf(age);
+    }
+
     public void setImage(String image) {
         this.image = image;
+    }
+
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
